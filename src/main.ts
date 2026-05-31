@@ -8,6 +8,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
+  // Mengaktifkan CORS agar frontend (React/Vue/Next.js dll) bisa mengakses API ini
+  app.enableCors();
+  
   app.setGlobalPrefix('api');
   
   app.useGlobalPipes(
@@ -33,7 +36,7 @@ const config = new DocumentBuilder()
   const port = process.env.PORT ?? 3000;
   await app.listen(port);
   
-  console.log(`API berjalan di http://localhost:${port}/api/hbb`);
+  console.log(`API berjalan di http://localhost:${port}/api/docs`);
 }
 
 bootstrap();
