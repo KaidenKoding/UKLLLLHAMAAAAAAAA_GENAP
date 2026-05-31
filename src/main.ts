@@ -1,5 +1,4 @@
 // src/main.ts
-// Entry point aplikasi NestJS
 
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
@@ -8,14 +7,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  // Tambahkan prefix global '/api' untuk semua endpoint
+  
   app.setGlobalPrefix('api');
-
-  // Aktifkan ValidationPipe secara global
-  // - whitelist: true → tolak field yang tidak ada di DTO
-  // - forbidNonWhitelisted: true → throw error jika ada field asing
-  // - transform: true → otomatis transform tipe data (string → number, dll)
   
   app.useGlobalPipes(
     new ValidationPipe({
@@ -26,21 +19,21 @@ async function bootstrap() {
   );
 
 const config = new DocumentBuilder()
-    .setTitle('Mie Gacoan API')
-    .setDescription('Dokumentasi API untuk Sistem Transaksi Mie Gacoan - UKL SMK')
+    .setTitle('UKL KULINER API')
+    .setDescription('UKL GACOAN WOOOO')
     .setVersion('1.0')
-    .addBearerAuth() // Penting buat ngetes JWT di Swagger
+    .addBearerAuth() 
     .build();
   
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document); // Ini alamat aksesnya nant
+  SwaggerModule.setup('api/docs', app, document); 
     
   
 
   const port = process.env.PORT ?? 3000;
   await app.listen(port);
   
-  console.log(`🍜 Mie Gacoan API berjalan di: http://localhost:${port}/api`);
+  console.log(`API berjalan di http://localhost:${port}/api/hbb`);
 }
 
 bootstrap();

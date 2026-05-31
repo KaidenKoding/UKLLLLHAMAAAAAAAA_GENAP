@@ -9,7 +9,6 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-// DTO untuk setiap item yang dipesan
 export class OrderItemDto {
   @IsInt({ message: 'menuId harus berupa integer' })
   @IsNotEmpty()
@@ -20,11 +19,10 @@ export class OrderItemDto {
   quantity: number;
 }
 
-// DTO untuk keseluruhan request order
 export class CreateTransactionDto {
   @IsArray()
   @ArrayMinSize(1, { message: 'Minimal pesan 1 item' })
-  @ValidateNested({ each: true }) // Validasi setiap item dalam array
-  @Type(() => OrderItemDto)       // Transform object biasa ke instance OrderItemDto
+  @ValidateNested({ each: true }) 
+  @Type(() => OrderItemDto)       
   items: OrderItemDto[];
 }

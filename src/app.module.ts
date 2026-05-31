@@ -10,13 +10,12 @@ import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
-    // ConfigModule.forRoot() agar .env bisa dibaca di seluruh aplikasi
     ConfigModule.forRoot({ isGlobal: true }),
 
-    PrismaModule,      // Global module — PrismaService tersedia di mana saja
-    AuthModule,        // Registrasi & Login + JWT
-    MenuModule,        // CRUD Menu
-    TransactionModule, // Proses Transaksi & Laporan
+    PrismaModule,     
+    AuthModule,        
+    MenuModule,        
+    TransactionModule, 
   ],
 })
 export class AppModule {}

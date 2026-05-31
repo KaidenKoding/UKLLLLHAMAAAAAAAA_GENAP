@@ -10,18 +10,17 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 @Module({
   imports: [
     PassportModule,
-    // JwtModule di-register secara async agar bisa baca JWT_SECRET dari .env
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '1d' }, // Token expired dalam 1 hari
+        signOptions: { expiresIn: '1d' }, 
       }),
       inject: [ConfigService],
     }),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
-  exports: [JwtModule], // Export agar bisa dipakai modul lain jika perlu
+  exports: [JwtModule], 
 })
 export class AuthModule {}
