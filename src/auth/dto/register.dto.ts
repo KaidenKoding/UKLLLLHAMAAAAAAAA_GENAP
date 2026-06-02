@@ -14,9 +14,7 @@ export class RegisterDto {
   @MinLength(6, { message: 'Password minimal 6 karakter' })
   password: string;
 
-  @IsEnum(Role, { message: 'Role harus KASIR atau PEMBELI' })
-  @IsOptional()
-  role?: Role;
+  
 
   @IsNumber()
   @Min(0)

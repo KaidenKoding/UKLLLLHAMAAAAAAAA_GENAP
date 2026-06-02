@@ -35,7 +35,7 @@ export class AuthService {
         name: dto.name,
         email: dto.email,
         password: hashedPassword,
-        role: dto.role ?? 'PEMBELI', 
+        role: 'PEMBELI', 
         balance: dto.balance ?? 0,
       },
     });
