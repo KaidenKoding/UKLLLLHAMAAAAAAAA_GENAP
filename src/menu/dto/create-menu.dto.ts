@@ -13,4 +13,7 @@ export class CreateMenuDto {
   @IsNumber()
   @Min(0, { message: 'Stok tidak boleh negatif' })
   stock: number;
+
+  @IsString()
+  category: string; 
 }
