@@ -15,5 +15,9 @@ export class CreateMenuDto {
   stock: number;
 
   @IsString()
+  @IsNotEmpty({ message: 'URL Gambar tidak boleh kosong' })
+  imageUrl: string; 
+
+  @IsString()
   category: string; 
 }

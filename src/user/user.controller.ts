@@ -14,7 +14,7 @@ interface AuthenticatedRequest extends Request {
   };
 }
 
-@Controller('api') // KITA KOSONGKAN DI SINI biar rutenya fleksibel sesuai request FE
+@Controller('') // KITA KOSONGKAN DI SINI biar rutenya fleksibel sesuai request FE
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
