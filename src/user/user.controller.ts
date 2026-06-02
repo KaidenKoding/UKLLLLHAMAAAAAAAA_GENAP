@@ -6,7 +6,6 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import type { Request } from 'express';
 
-// Interface bawaan biar TypeScript gak marah saat manggil req.user.id
 interface AuthenticatedRequest extends Request {
   user: {
     id: number;
@@ -14,25 +13,28 @@ interface AuthenticatedRequest extends Request {
   };
 }
 
-@Controller('api') // KITA KOSONGKAN DI SINI biar rutenya fleksibel sesuai request FE
+// JANGAN ISI APAPUN DI DALAM @Controller() JIKA DI main.ts SUDAH ADA GLOBAL PREFIX 'api'
+@Controller() 
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // 1. Menyelaraskan ke GET api/users (Sesuai request FE setelah login)
+  // Frontend minta: /api/users
+  // Karena global prefix-nya 'api', kita cukup tulis 'users' saja di sini!
   @Get('users')
-  @Roles('KASIR') // Hanya kasir yang bisa lihat semua daftar user/pembeli
+  @Roles('KASIR')
   async getAllUsers() {
     return this.userService.findAll();
   }
 
-  // 2. Menyelaraskan ke GET api/me (Sesuai request FE saat pertama kali load)
+  // Frontend minta: /api/me
+  // Cukup tulis 'me' saja di sini, NestJS otomatis menggabungkannya jadi /api/me
   @Get('me')
   async getProfile(@Req() req: AuthenticatedRequest) {
     return this.userService.findMe(req.user.id);
   }
 
-  // 3. Fitur Top Up (Kita amankan dulu biar gak error, manggil fungsi update balance dasar)
+  // Frontend minta: /api/user/topup
   @Post('user/topup')
   @Roles('PEMBELI')
   async topUp(
