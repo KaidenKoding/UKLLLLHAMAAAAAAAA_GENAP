@@ -42,7 +42,7 @@ model Menu {
   name      String
   price     Float
   stock     Int         @default(0)
-  category  String      @default("mie") // <--- TAMBAHKAN BARIS INI (Beri default "mie" agar data lama tidak error)
+  category  String      @default("mie") 
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 
