@@ -1,5 +1,5 @@
 // src/user/user.controller.ts
-import { Controller, Get, Req, UseGuards, Body, Post } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards, Body, Post, Param } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -32,13 +32,15 @@ export class UserController {
     return this.userService.findMe(req.user.id);
   }
 
-  // 3. Fitur Top Up (Kita amankan dulu biar gak error, manggil fungsi update balance dasar)
-  @Post('user/topup')
-  @Roles('PEMBELI')
+  // 3. Fitur Top Up - Diisi oleh KASIR untuk PEMBELI tertentu
+  // URL: POST /api/user/:id/topup
+  @Post('user/:id/topup')
+  @Roles('KASIR') // 🔥 Hanya KASIR yang boleh mencet tombol Top Up Saldo di FE!
   async topUp(
-    @Req() req: AuthenticatedRequest,
-    @Body('amount') amount: number,
+    @Param('id') id: string, // <-- Mengambil ID Pembeli yang dipilih Kasir dari URL
+    @Body('amount') amount: number, // <-- Mengambil nominal dari input modal FE
   ) {
-    return this.userService.topUp(req.user.id, amount);
+    // Mengubah string id dari URL menjadi number (+id) untuk dimasukkan ke Prisma
+    return this.userService.topUp(+id, amount);
   }
 }
