@@ -29,23 +29,23 @@ export class UserService {
     return user;
   }
 
-  async topUp(userId: number, amount: number) {
-    // 1. Cari user
-    const user = await this.prisma.user.findUnique({ 
-      where: { id: userId } 
-    });
-
-    if (!user) throw new NotFoundException("User tidak ditemukan");
-
-    // 2. Update saldo
-    const updatedUser = await this.prisma.user.update({
+  async topUpSaldo(userId: number, amount: number) {
+    const user = await this.prisma.user.findUnique({
       where: { id: userId },
-      data: { balance: user.balance + amount }
     });
 
-    return { 
-      message: `Top up berhasil! Saldo baru: Rp${updatedUser.balance}`,
-      balance: updatedUser.balance
-    };
+    if (!user) {
+      throw new NotFoundException(`User dengan ID ${userId} tidak ditemukan`);
+    }
+
+    // 🔥 Tambahkan saldo lama dengan nominal top up baru
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        balance: {
+          increment: amount,
+        },
+      },
+    });
   }
 }

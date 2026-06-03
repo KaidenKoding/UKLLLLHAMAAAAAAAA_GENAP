@@ -1,5 +1,3 @@
-// Prisma Schema - Mie Gacoan Transaction System
-// Jalankan: npx prisma migrate dev --name init
 
 generator client {
   provider = "prisma-client-js"
@@ -10,17 +8,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ==========================
-// Enum: Role pengguna
-// ==========================
+
 enum Role {
   KASIR
   PEMBELI
 }
 
-// ==========================
-// Model: User
-// ==========================
 model User {
   id        Int      @id @default(autoincrement())
   name      String
@@ -34,9 +27,7 @@ model User {
   orders    Order[]
 }
 
-// ==========================
-// Model: Menu
-// ==========================
+
 model Menu {
   id        Int         @id @default(autoincrement())
   name      String
@@ -50,9 +41,7 @@ model Menu {
   orderItems OrderItem[]
 }
 
-// ==========================
-// Model: Order (Header)
-// ==========================
+
 model Order {
   id         Int         @id @default(autoincrement())
   userId     Int
@@ -63,9 +52,7 @@ model Order {
   orderItems OrderItem[]
 }
 
-// ==========================
-// Model: OrderItem (Detail)
-// ==========================
+
 model OrderItem {
   id       Int   @id @default(autoincrement())
   orderId  Int
